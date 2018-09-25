@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище DiakontModelContainer" CdmEntityContainer="DiakontEntities">
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="DiakontModel.Departments">
+        <MappingFragment StoreEntitySet="Departments">
+          <ScalarProperty Name="department_id" ColumnName="department_id" />
+          <ScalarProperty Name="department_name" ColumnName="department_name" />
+          <ScalarProperty Name="date_from" ColumnName="date_from" />
+          <ScalarProperty Name="workers_amount" ColumnName="workers_amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jobs">
+      <EntityTypeMapping TypeName="DiakontModel.Jobs">
+        <MappingFragment StoreEntitySet="Jobs">
+          <ScalarProperty Name="job_id" ColumnName="job_id" />
+          <ScalarProperty Name="job_name" ColumnName="job_name" />
+          <ScalarProperty Name="date_from" ColumnName="date_from" />
+          <ScalarProperty Name="fee" ColumnName="fee" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reports">
+      <EntityTypeMapping TypeName="DiakontModel.Reports">
+        <MappingFragment StoreEntitySet="Reports">
+          <ScalarProperty Name="report_id" ColumnName="report_id" />
+          <ScalarProperty Name="j_id" ColumnName="j_id" />
+          <ScalarProperty Name="d_id" ColumnName="d_id" />
+          <ScalarProperty Name="date_from" ColumnName="date_from" />
+          <ScalarProperty Name="date_to" ColumnName="date_to" />
+          <ScalarProperty Name="monthly_pay" ColumnName="monthly_pay" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

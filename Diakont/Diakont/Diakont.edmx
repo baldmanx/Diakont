@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DiakontModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="department_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ddate_from" Type="date" />
+          <Property Name="workers_amount" Type="int" />
+        </EntityType>
+        <EntityType Name="Jobs">
+          <Key>
+            <PropertyRef Name="job_id" />
+          </Key>
+          <Property Name="job_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="job_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="jdate_from" Type="date" />
+          <Property Name="fee" Type="money" />
+        </EntityType>
+        <EntityType Name="Reports">
+          <Key>
+            <PropertyRef Name="report_id" />
+          </Key>
+          <Property Name="report_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="j_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="d_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="date_from" Type="date" Nullable="false" />
+          <Property Name="date_to" Type="date" Nullable="false" />
+          <Property Name="monthly_pay" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Reports__d_id__22AA2996">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="d_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reports__j_id__21B6055D">
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="job_id" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="j_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DiakontModelContainer">
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Reports__d_id__22AA2996" Association="Self.FK__Reports__d_id__22AA2996">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reports__j_id__21B6055D" Association="Self.FK__Reports__j_id__21B6055D">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DiakontModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="Guid" Nullable="false" />
+          <Property Name="department_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ddate_from" Type="DateTime" Precision="0" />
+          <Property Name="workers_amount" Type="Int32" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK__Reports__d_id__22AA2996" FromRole="Departments" ToRole="Reports" />
+        </EntityType>
+        <EntityType Name="Jobs">
+          <Key>
+            <PropertyRef Name="job_id" />
+          </Key>
+          <Property Name="job_id" Type="Guid" Nullable="false" />
+          <Property Name="job_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="jdate_from" Type="DateTime" Precision="0" />
+          <Property Name="fee" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK__Reports__j_id__21B6055D" FromRole="Jobs" ToRole="Reports" />
+        </EntityType>
+        <EntityType Name="Reports">
+          <Key>
+            <PropertyRef Name="report_id" />
+          </Key>
+          <Property Name="report_id" Type="Guid" Nullable="false" />
+          <Property Name="j_id" Type="Guid" Nullable="false" />
+          <Property Name="d_id" Type="Guid" Nullable="false" />
+          <Property Name="date_from" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date_to" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="monthly_pay" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK__Reports__d_id__22AA2996" FromRole="Reports" ToRole="Departments" />
+          <NavigationProperty Name="Jobs" Relationship="Self.FK__Reports__j_id__21B6055D" FromRole="Reports" ToRole="Jobs" />
+        </EntityType>
+        <Association Name="FK__Reports__d_id__22AA2996">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="d_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reports__j_id__21B6055D">
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="job_id" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="j_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DiakontEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Departments" EntityType="Self.Departments" />
+          <EntitySet Name="Jobs" EntityType="Self.Jobs" />
+          <EntitySet Name="Reports" EntityType="Self.Reports" />
+          <AssociationSet Name="FK__Reports__d_id__22AA2996" Association="Self.FK__Reports__d_id__22AA2996">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reports__j_id__21B6055D" Association="Self.FK__Reports__j_id__21B6055D">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DiakontModelContainer" CdmEntityContainer="DiakontEntities">
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="DiakontModel.Departments">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
+                <ScalarProperty Name="ddate_from" ColumnName="ddate_from" />
+                <ScalarProperty Name="workers_amount" ColumnName="workers_amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="DiakontModel.Jobs">
+              <MappingFragment StoreEntitySet="Jobs">
+                <ScalarProperty Name="job_id" ColumnName="job_id" />
+                <ScalarProperty Name="job_name" ColumnName="job_name" />
+                <ScalarProperty Name="jdate_from" ColumnName="jdate_from" />
+                <ScalarProperty Name="fee" ColumnName="fee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reports">
+            <EntityTypeMapping TypeName="DiakontModel.Reports">
+              <MappingFragment StoreEntitySet="Reports">
+                <ScalarProperty Name="report_id" ColumnName="report_id" />
+                <ScalarProperty Name="j_id" ColumnName="j_id" />
+                <ScalarProperty Name="d_id" ColumnName="d_id" />
+                <ScalarProperty Name="date_from" ColumnName="date_from" />
+                <ScalarProperty Name="date_to" ColumnName="date_to" />
+                <ScalarProperty Name="monthly_pay" ColumnName="monthly_pay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

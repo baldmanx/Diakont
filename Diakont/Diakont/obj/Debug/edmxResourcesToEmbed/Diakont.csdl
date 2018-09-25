@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DiakontModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Departments">
+    <Key>
+      <PropertyRef Name="department_id" />
+    </Key>
+    <Property Name="department_id" Type="Guid" Nullable="false" />
+    <Property Name="department_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ddate_from" Type="DateTime" Precision="0" />
+    <Property Name="workers_amount" Type="Int32" />
+    <NavigationProperty Name="Reports" Relationship="Self.FK__Reports__d_id__22AA2996" FromRole="Departments" ToRole="Reports" />
+  </EntityType>
+  <EntityType Name="Jobs">
+    <Key>
+      <PropertyRef Name="job_id" />
+    </Key>
+    <Property Name="job_id" Type="Guid" Nullable="false" />
+    <Property Name="job_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="jdate_from" Type="DateTime" Precision="0" />
+    <Property Name="fee" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Reports" Relationship="Self.FK__Reports__j_id__21B6055D" FromRole="Jobs" ToRole="Reports" />
+  </EntityType>
+  <EntityType Name="Reports">
+    <Key>
+      <PropertyRef Name="report_id" />
+    </Key>
+    <Property Name="report_id" Type="Guid" Nullable="false" />
+    <Property Name="j_id" Type="Guid" Nullable="false" />
+    <Property Name="d_id" Type="Guid" Nullable="false" />
+    <Property Name="date_from" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="date_to" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="monthly_pay" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Departments" Relationship="Self.FK__Reports__d_id__22AA2996" FromRole="Reports" ToRole="Departments" />
+    <NavigationProperty Name="Jobs" Relationship="Self.FK__Reports__j_id__21B6055D" FromRole="Reports" ToRole="Jobs" />
+  </EntityType>
+  <Association Name="FK__Reports__d_id__22AA2996">
+    <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+    <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departments">
+        <PropertyRef Name="department_id" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="d_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reports__j_id__21B6055D">
+    <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
+    <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jobs">
+        <PropertyRef Name="job_id" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="j_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DiakontEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Departments" EntityType="Self.Departments" />
+    <EntitySet Name="Jobs" EntityType="Self.Jobs" />
+    <EntitySet Name="Reports" EntityType="Self.Reports" />
+    <AssociationSet Name="FK__Reports__d_id__22AA2996" Association="Self.FK__Reports__d_id__22AA2996">
+      <End Role="Departments" EntitySet="Departments" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reports__j_id__21B6055D" Association="Self.FK__Reports__j_id__21B6055D">
+      <End Role="Jobs" EntitySet="Jobs" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

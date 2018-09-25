@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище DiakontModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Departments">
+    <Key>
+      <PropertyRef Name="department_id" />
+    </Key>
+    <Property Name="department_id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="department_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="date_from" Type="date" />
+    <Property Name="workers_amount" Type="int" />
+  </EntityType>
+  <EntityType Name="Jobs">
+    <Key>
+      <PropertyRef Name="job_id" />
+    </Key>
+    <Property Name="job_id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="job_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="date_from" Type="date" />
+    <Property Name="fee" Type="money" />
+  </EntityType>
+  <EntityType Name="Reports">
+    <Key>
+      <PropertyRef Name="report_id" />
+    </Key>
+    <Property Name="report_id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="j_id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="d_id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="date_from" Type="date" Nullable="false" />
+    <Property Name="date_to" Type="date" Nullable="false" />
+    <Property Name="monthly_pay" Type="money" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Reports__d_id__15502E78">
+    <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+    <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departments">
+        <PropertyRef Name="department_id" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="d_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reports__j_id__145C0A3F">
+    <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
+    <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jobs">
+        <PropertyRef Name="job_id" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="j_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище DiakontModelContainer">
+    <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Reports__d_id__15502E78" Association="Self.FK__Reports__d_id__15502E78">
+      <End Role="Departments" EntitySet="Departments" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reports__j_id__145C0A3F" Association="Self.FK__Reports__j_id__145C0A3F">
+      <End Role="Jobs" EntitySet="Jobs" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
